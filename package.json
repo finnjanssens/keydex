@@ -1,0 +1,47 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "keydex",
+  "title": "Keydex",
+  "description": "An index of every keyboard shortcut across your apps — auto-discovered from ghostty, nvim, tmux, zsh, obsidian, vscode, cursor, zed, and any GUI app's menus via Accessibility.",
+  "icon": "extension-icon.png",
+  "author": "finn",
+  "categories": [
+    "Productivity",
+    "Developer Tools"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "search-shortcuts",
+      "title": "Search Shortcuts",
+      "subtitle": "Keydex",
+      "description": "Fuzzy-search keyboard shortcuts across your tools",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "includeAccessibility",
+      "type": "checkbox",
+      "label": "GUI app shortcuts",
+      "description": "Read menu-bar shortcuts of running apps via the Accessibility API (requires granting Raycast Accessibility permission).",
+      "default": true,
+      "required": false
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.80.0",
+    "@raycast/utils": "^2.2.7"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.0",
+    "@types/node": "^20.8.10",
+    "@types/react": "^19.0.10",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "dev": "ray develop",
+    "build": "ray build -e dist",
+    "lint": "ray lint"
+  }
+}
