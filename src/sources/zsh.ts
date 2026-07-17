@@ -6,7 +6,12 @@ import { which, execAt } from "../shell";
 const SKIP = new Set(["self-insert", "undefined-key", "digit-argument"]);
 
 function humanizeWidget(w: string): string {
-  const s = w.replace(/^\./, "").replace(/-/g, " "); // strip leading `.` (builtin marker)
+  // Strip leading markers (`.` builtin, `_` completion widgets), then treat both
+  // `-` and `_` as word separators: `_expand_word` → "Expand word".
+  const s = w
+    .replace(/^[._]+/, "")
+    .replace(/[-_]+/g, " ")
+    .trim();
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
