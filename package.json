@@ -4,7 +4,7 @@
   "title": "Keydex",
   "description": "An index of every keyboard shortcut across your apps — auto-discovered from ghostty, nvim, tmux, zsh, obsidian, vscode, cursor, zed, and any GUI app's menus via Accessibility.",
   "icon": "extension-icon.png",
-  "author": "finnjanssens",
+  "author": "finn_janssens",
   "categories": [
     "Productivity",
     "Developer Tools"
