@@ -40,6 +40,9 @@ async function collect(
       console.error(`extractor ${sources[i].name} failed:`, r.reason);
     }
   });
+  // Ensure every action reads as a label: capitalize the first letter.
+  for (const it of items)
+    it.action = it.action.charAt(0).toUpperCase() + it.action.slice(1);
   items.sort((a, b) => a.action.localeCompare(b.action));
   return { items, failed };
 }
