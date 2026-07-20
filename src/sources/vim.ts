@@ -41,12 +41,18 @@ function parseIndex(text: string): Shortcut[] {
     if (parts.length < 2) continue;
     const keys = renderVimKey(parts[0].trim());
     // desc column may start with a note code ("1  ", "2  "); strip it.
-    const desc = parts
+    let desc = parts
       .slice(1)
       .join(" ")
       .replace(/^\d+\s+/, "")
       .trim();
-    if (!keys || !desc || SKIP_DESC.test(desc)) continue;
+    // Strip quotes wrapping the whole description (but keep meaningful inner
+    // quotes like `same as "h"`).
+    if (/^".*"$/.test(desc)) desc = desc.slice(1, -1).trim();
+    // Drop entries with no real description (e.g. a lone `"` ditto mark).
+    if (!keys || !/[a-z]/i.test(desc) || SKIP_DESC.test(desc)) continue;
+    // Sentence-start capital; vim's meaningful casing (WORD, N) is left intact.
+    desc = desc.charAt(0).toUpperCase() + desc.slice(1);
     const dedup = keys + "\0" + desc;
     if (seen.has(dedup)) continue;
     seen.add(dedup);
