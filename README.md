@@ -24,6 +24,7 @@ the key — across your terminal, editors, and GUI apps at once.
 | --- | --- |
 | **ghostty** | `ghostty +list-keybinds` |
 | **nvim** | headless-loads your config, dumps `vim.api.nvim_get_keymap()` |
+| **vim** (built-ins) | parses `$VIMRUNTIME/doc/index.txt` for stock motions/operators (Normal + Visual) |
 | **tmux** | `tmux list-keys` (prefix + root tables) |
 | **zsh** | `bindkey` (line-editor bindings) |
 | **vscode / cursor** | curated mac defaults merged with your `keybindings.json` |
@@ -71,7 +72,7 @@ src/
   shell.ts               binary resolution + exec (loginPath, which, execAt)
   jsonc.ts               string-aware JSONC parser (vscode + zed)
   sources/
-    ghostty.ts nvim.ts tmux.ts zsh.ts
+    ghostty.ts nvim.ts vim.ts tmux.ts zsh.ts
     vscode.ts zed.ts obsidian.ts
     accessibility.ts     macOS menu bars of all other GUI apps (JXA + AX bridge)
     index.ts             SOURCES registry (name, brand color, icon, extractor)

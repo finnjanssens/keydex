@@ -3,6 +3,7 @@ import { Color, Icon } from "@raycast/api";
 import { Extractor } from "../types";
 import { ghostty } from "./ghostty";
 import { nvim } from "./nvim";
+import { vim } from "./vim";
 import { tmux } from "./tmux";
 import { zsh } from "./zsh";
 import { obsidian } from "./obsidian";
@@ -32,6 +33,7 @@ export const SOURCES: Source[] = [
     app: "/Applications/Ghostty.app",
   },
   { name: "nvim", color: Color.Green, icon: Icon.Pencil, run: nvim },
+  { name: "vim", color: Color.Green, icon: Icon.Book, run: vim },
   { name: "tmux", color: Color.Yellow, icon: Icon.Window, run: tmux },
   { name: "zsh", color: Color.Orange, icon: Icon.Terminal, run: zsh },
   {

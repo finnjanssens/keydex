@@ -14,14 +14,19 @@ const MODE: Record<string, string> = {
   c: "Command",
 };
 
-export async function nvim(path: string): Promise<Shortcut[]> {
-  const bin = await which("nvim", path, [
+// Shared so the vim built-ins source can locate nvim too.
+export function resolveNvim(path: string): Promise<string | null> {
+  return which("nvim", path, [
     `/etc/profiles/per-user/${USER}/bin/nvim`,
     `/Users/${USER}/.nix-profile/bin/nvim`,
     "/run/current-system/sw/bin/nvim",
     "/opt/homebrew/bin/nvim",
     "/usr/local/bin/nvim",
   ]);
+}
+
+export async function nvim(path: string): Promise<Shortcut[]> {
+  const bin = await resolveNvim(path);
   if (!bin) return [];
   // nvim's own dir on PATH so its plugin manager finds git/tools loading config.
   const nvimPath = `${dirname(bin)}:${path}`;
