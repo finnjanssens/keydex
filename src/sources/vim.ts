@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { Shortcut } from "../types";
+import { renderAngleTokens } from "../keys";
 import { execAt } from "../shell";
 import { resolveNvim } from "./nvim";
 
@@ -17,9 +18,12 @@ const KEEP_SECTIONS: Record<string, string> = {
 const SKIP_DESC = /not used|reserved|unmapped|not mapped/i;
 
 function renderVimKey(k: string): string {
-  return k
+  const cleaned = k
     .replace(/^\["[^\]]*\]/, "") // strip register prefix like ["x]
     .replace(/CTRL-(.)/g, (_, c) => "⌃" + c.toUpperCase());
+  // `<Tab>`/`<BS>`/`<CR>`/`<Down>`/`<C-Left>`… → symbols. `^` stays: it's the
+  // literal caret key (first non-blank motion), not a control indicator.
+  return renderAngleTokens(cleaned);
 }
 
 function parseIndex(text: string): Shortcut[] {

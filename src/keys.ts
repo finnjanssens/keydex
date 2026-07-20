@@ -165,7 +165,8 @@ export function renderZshKeys(seq: string): string {
   return out;
 }
 
-// nvim: `<C-w>`, `<Tab>`, leading space (leader) → symbols
+// Angle-bracket tokens: `<C-w>` → ⌃W, `<Tab>` → ⇥, `<Down>` → ↓, etc.
+// Shared by nvim (keymaps) and vim (index.txt built-ins).
 const NVIM_MOD: Record<string, string> = {
   C: "⌃",
   M: "⌥",
@@ -173,14 +174,15 @@ const NVIM_MOD: Record<string, string> = {
   S: "⇧",
   D: "⌘",
 };
+export function renderAngleTokens(s: string): string {
+  return s
+    .replace(
+      /<([CMASD])-([^>]+)>/g,
+      (_, mod, inner) => NVIM_MOD[mod] + renderKeyToken(inner),
+    )
+    .replace(/<([^>]+)>/g, (_, k) => renderKeyToken(k));
+}
 export function renderNvimKeys(lhs: string): string {
-  let s = lhs;
-  s = s.replace(
-    /<([CMASD])-([^>]+)>/g,
-    (_, mod, inner) => NVIM_MOD[mod] + renderKeyToken(inner),
-  );
-  s = s.replace(/<([^>]+)>/g, (_, k) => renderKeyToken(k));
   // <leader> is already resolved to its literal key (e.g. Space) in the lhs.
-  s = s.replace(/ /g, "␣");
-  return s;
+  return renderAngleTokens(lhs).replace(/ /g, "␣");
 }
